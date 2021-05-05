@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react'
 // useDispatch to fire off the listProduct ACTION, useSelector let's us select a certain part of our state
 import { useDispatch, useSelector } from 'react-redux'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
 import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
-import axios from 'axios'
+
+
 
 import { listProducts } from '../actions/productActions'
 
 function HomeScreen() {
     const dispatch = useDispatch()
     //  for this read store.js
+    //  from homescreen we're triggering listProduct ACTION
     const productList = useSelector(state => state.productList)
+    // console.log(productList)
     const { error, loading, products } = productList
-    
 
-    console.log(productList)
+
+
     // {
     // useState ---- state is products and setproducts is used to update the products
     // const [products, setProducts] = useState([]) // right now the product is an empty array and whatever we put in this will be its actual value.
@@ -25,6 +30,7 @@ function HomeScreen() {
     useEffect(() => {
 
         dispatch(listProducts())
+
 
         // {
         // we'll use axios to make the call, load in data and to make the updates
@@ -41,21 +47,25 @@ function HomeScreen() {
     }, [dispatch])
 
 
-
-
     return (
         <div>
             <h1>Latest Products</h1>
-            <Row>
-                {/*  mapping every single product arrow function     */}
-                {products.map(product => (
-                    <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                        <Product product={product} />
-                    </Col>
-                ))}
+            {loading ? <Loader />
+                : error ? <Message>{error}</Message>
+                    :
+                    <Row>
+                        {/*  mapping every single product arrow function     */}
+                        {products.map(product => (
+                            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                                {/* this product component will structure all the products as 'Product.js */}
+                                <Product product={product} />
+                            </Col>
+                        ))}
 
-            </Row>
-        </div>
+                    </Row>
+            }
+
+        </div >
     )
 }
 

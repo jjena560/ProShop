@@ -7,6 +7,7 @@ function Product({ product }) {
     return (
         <Card className="my-3 p-3 rounded">
             {/* Alternative for a href,,,, reactifying url */}
+            {/* if we click a product it'll go to productScreen page */}
             <Link to={`/product/${product._id}`}>
                 <Card.Img src={product.image} />
             </Link>
