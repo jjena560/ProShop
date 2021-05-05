@@ -1,0 +1,15 @@
+->So the frontend will send get request to the view(of the django api)
+->then the backend will ask the data from the database
+->then he database will return the data to the view.
+->after getting the data view will serialize the data before sending it to the front end because rn it's a python query set and front end will want only a JSON data.
+-> after serializing the data the JSON data is sent to the front end.
+
+
+A REDUCER is simply a function that takes the current state and a take an action of what we wanna do to the state and depending
+on that action it'll manipulate the stateit'll update the store.
+
+
+-> redux thunk allows us to make a function inside a function
+
+
+Json webtoken is just a encoded data of an user
