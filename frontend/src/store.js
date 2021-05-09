@@ -4,6 +4,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { productListReducer, productDetailsReducer } from './reducers/productReducers'
 
 import { cartReducer } from './reducers/cartReducers'
+import { userLoginReducer } from './reducers/userReducers'
+import { userRegisterReducer, userDetailsReducer } from './reducers/userReducers'
 
 
 const reducer = combineReducers({
@@ -11,17 +13,25 @@ const reducer = combineReducers({
     // this is one reducer below and we select the reducer by using useSelector
     productList: productListReducer, // this triggers the first call of reducer
     productDetails: productDetailsReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    userLogin: userLoginReducer,
+    userRegister: userRegisterReducer,
+    userDetails: userDetailsReducer,
 })
 
 // gettig the data from localStorage with key==='cartitems but first checking if it actually exists
 const cartItemsFromStorage = localStorage.getItem('cartItems') ?
     JSON.parse(localStorage.getItem('cartItems')) : []
 
+const userInfoFromStorage = localStorage.getItem('userInfo') ?
+    JSON.parse(localStorage.getItem('userInfo')) : null
+
+
 
 const intitalState = {
     // state-key-value
-    cart: { cartItems: cartItemsFromStorage }
+    cart: { cartItems: cartItemsFromStorage },
+    userLogin: { userInfo: userInfoFromStorage }
 }
 
 const middleWare = [thunk]
