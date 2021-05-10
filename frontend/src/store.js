@@ -5,7 +5,7 @@ import { productListReducer, productDetailsReducer } from './reducers/productRed
 
 import { cartReducer } from './reducers/cartReducers'
 import { userLoginReducer } from './reducers/userReducers'
-import { userRegisterReducer, userDetailsReducer } from './reducers/userReducers'
+import { userRegisterReducer, userDetailsReducer, userUpdateProfileReducer } from './reducers/userReducers'
 
 
 const reducer = combineReducers({
@@ -17,6 +17,7 @@ const reducer = combineReducers({
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
     userDetails: userDetailsReducer,
+    userUpdateProfile: userUpdateProfileReducer,
 })
 
 // gettig the data from localStorage with key==='cartitems but first checking if it actually exists
@@ -27,10 +28,15 @@ const userInfoFromStorage = localStorage.getItem('userInfo') ?
     JSON.parse(localStorage.getItem('userInfo')) : null
 
 
+const shippingInfoFromStorage = localStorage.getItem('shippingAddress') ?
+    JSON.parse(localStorage.getItem('shippingAddress')) : {}
 
 const intitalState = {
     // state-key-value
-    cart: { cartItems: cartItemsFromStorage },
+    cart: {
+        cartItems: cartItemsFromStorage,
+        shippingAddress: shippingInfoFromStorage
+    },
     userLogin: { userInfo: userInfoFromStorage }
 }
 
