@@ -143,6 +143,7 @@ export const orderDeliverReducer = (state = {}, action) => {
 }
 
 
+// this will load the orders of the logged in user
 export const orderListMyReducer = (state = { orders: [] }, action) => {
     switch (action.type) {
         case ORDER_LIST_MY_REQUEST:

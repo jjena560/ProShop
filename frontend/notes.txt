@@ -13,3 +13,10 @@ on that action it'll manipulate the stateit'll update the store.
 
 
 Json webtoken is just a encoded data of an user
+
+
+
+-> Create personal and buisness accounts 
+-> create app and copy the token(clientid)
+-> Add paypal script to add those buttons
+-> react-paypal-button-v2(additional lib)
