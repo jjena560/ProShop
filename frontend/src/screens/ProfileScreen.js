@@ -47,7 +47,7 @@ function ProfileScreen({ history }) {
             if (!user || !user.name || success || userInfo._id !== user._id) {
                 dispatch({ type: USER_UPDATE_PROFILE_RESET })
                 //  if not then dispatch
-                dispatch(getUserDetails('profile'))
+                dispatch(getUserDetails(userInfo._id))
                 dispatch(listMyOrders())
             } else {
                 //  if yes then set the data

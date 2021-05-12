@@ -98,6 +98,43 @@ def getUsers(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAdminUser])
+def getUserById(request, pk):
+    user = User.objects.get(id = pk)
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateUser(request, pk):
+    
+    user = User.objects.get(id = pk)
+     
+
+    data = request.data
+    # now the modifications
+    user.first_name = data['name']
+    user.username = data['email']
+    user.email = data['email']
+    user.is_staff = data['isAdmin']
+
+
+    user.save()
+    serializer = UserSerializer(user, many=False)
+    
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteUser(request, pk):
+    userForDeletion = User.objects.get(id = pk)
+    userForDeletion.delete()
+    return Response("user was deleted")
+
+
+@api_view(['GET'])
 # #the response will only work if you have this decorator before the function
 def getProducts(request):
     products = Product.objects.all()

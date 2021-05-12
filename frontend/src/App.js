@@ -11,8 +11,12 @@ import ShippingScreen from './screens/ShippingScreen'
 import PaymentScreen from './screens/PaymentScreen'
 import PlaceOrderScreen from './screens/PlaceOrderScreen'
 import OrderScreen from './screens/OrderScreen'
+import UserListScreen from './screens/UserListScreen'
+import UserEditScreen from './screens/UserEditScreen'
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+
+
 function App() {
   return (
     <Router>
@@ -31,6 +35,9 @@ function App() {
           < Route path='/product/:id' component={ProductScreen} />
           {/* the question mark makes it an optiaonal parameter */}
           <Route path='/cart/:id?' component={CartScreen} />
+
+          < Route path='/admin/userlist' component={UserListScreen} />
+          < Route path='/admin/user/:id/edit' component={UserEditScreen} />
         </Container>
       </main>
       <Footer />
