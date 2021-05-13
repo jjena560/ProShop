@@ -25,7 +25,7 @@ function ProductListScreen({ history, match }) {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    // let keyword = history.location.search
+    let keyword = history.location.search
     useEffect(() => {
         dispatch({ type: PRODUCT_CREATE_RESET })
 
@@ -37,10 +37,10 @@ function ProductListScreen({ history, match }) {
             // if a product is created then sending the user to the edit page for tht product
             history.push(`/admin/product/${createdProduct._id}/edit`)
         } else {
-            dispatch(listProducts())
+            dispatch(listProducts(keyword))
         }
 
-    }, [dispatch, history, userInfo, successCreate, successDelete])
+    }, [dispatch, history, userInfo, successCreate, successDelete, keyword])
 
 
     const deleteHandler = (id) => {

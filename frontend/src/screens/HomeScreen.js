@@ -5,6 +5,8 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
+import Paginate from '../components/Paginate'
+import ProductCarousel from '../components/ProductCarousel'
 
 
 
@@ -16,7 +18,7 @@ function HomeScreen({ history }) {
     //  from homescreen we're triggering listProduct ACTION
     const productList = useSelector(state => state.productList)
 
-    const { error, loading, products } = productList
+    const { error, loading, products, page, pages } = productList
 
     // so now anytime the keyword changes its gonna reload as it is a dependecy now in the useffect
     let keyword = history.location.search
@@ -51,20 +53,25 @@ function HomeScreen({ history }) {
 
     return (
         <div>
+            {!keyword && <ProductCarousel />}
+
             <h1>Latest Products</h1>
             {loading ? <Loader />
                 : error ? <Message>{error}</Message>
                     :
-                    <Row>
-                        {/*  mapping every single product arrow function     */}
-                        {products.map(product => (
-                            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                                {/* this product component will structure all the products as 'Product.js */}
-                                <Product product={product} />
-                            </Col>
-                        ))}
+                    <div>
+                        <Row>
+                            {/*  mapping every single product arrow function     */}
+                            {products.map(product => (
+                                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                                    {/* this product component will structure all the products as 'Product.js */}
+                                    <Product product={product} />
+                                </Col>
+                            ))}
 
-                    </Row>
+                        </Row>
+                        <Paginate page={page} pages={pages} keyword={keyword} />
+                    </div>
             }
 
         </div >

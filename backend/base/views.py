@@ -10,6 +10,8 @@ from .models import Product, Order, OrderItem, ShippingAddress, Review
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from rest_framework import status 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenObtainSlidingSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -142,11 +144,44 @@ def getProducts(request):
 
     if query == None:
         query = ''
-#  this means if the any part of product name contains the query 
-# i in icontains means no case sensititive
-    products = Product.objects.filter(name__icontains = query)
+    #  this means if the any part of product name contains the query 
+    # i in icontains means no case sensititive
+    products = Product.objects.filter(name__icontains = query).order_by('-createdAt')
+
+    # Pagination 
+    # now we want to paginate the filtered data
+    page  = request.query_params.get('page') # this will store the page we want to see
+
+    paginator = Paginator(products, 6) # takes in the query set to be paginated and the numer of products to be showed in a single page
+    # now on every page we have two products
+
+    
+
+    try:
+        products = paginator.page(page) #this will open the page given and render those two products
+    except PageNotAnInteger:
+        products = paginator.page(1) # first page
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages) #last page
+
+    if page == None:
+        page = 1
+    
+    
+    # sometimes the frontend passes the page as string
+    page = int(page)
+        
+
     serializer = ProductSerializer(products, many=True) #many means more than one objects
+    return Response({'products': serializer.data, 'page':page, 'pages': paginator.num_pages})
+
+
+@api_view(['GET'])
+def getTopProducts(request):
+    products = Product.objects.filter(rating__gte=4).order_by('-rating')[0:5]
+    serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
+
 
 @api_view(['GET']) 
 def getProduct(request, pk):

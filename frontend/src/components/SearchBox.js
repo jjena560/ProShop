@@ -14,7 +14,7 @@ function SearchBox() {
         e.preventDefault()
         if (keyword) {
             // just sending the user to the homepage with the keyword appende
-            history.push(`/?keyword=${keyword}`)
+            history.push(`/?keyword=${keyword}&page=1`)
         } else {
             // sending the user to the original page
             history.push(history.push(history.location.pathname))
