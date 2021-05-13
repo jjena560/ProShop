@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Row, Col, Buttons, Card, Image, Form, ListGroup, Button } from 'react-bootstrap'
 import { Message } from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartAction'
-import { useLocation } from 'react-router-dom'
 
 function CartScreen({ match, location, history }) {
     const productId = match.params.id

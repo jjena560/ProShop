@@ -115,6 +115,7 @@ export const orderPayReducer = (state = {}, action) => {
 }
 
 
+// to set the delievery state of the product
 export const orderDeliverReducer = (state = {}, action) => {
     switch (action.type) {
         case ORDER_DELIVER_REQUEST:
@@ -174,6 +175,7 @@ export const orderListMyReducer = (state = { orders: [] }, action) => {
 }
 
 
+// this will load all the orders and can only be seen by the adminUser
 
 export const orderListReducer = (state = { orders: [] }, action) => {
     switch (action.type) {

@@ -25,8 +25,10 @@ function OrderScreen({ match, history }) {
     // as we already have loading above so to avoid conflicts changing the name and storing with a different name
     const { loading: loadingPay, success: successPay } = orderPay
 
-    // const orderDeliver = useSelector(state => state.orderDeliver)
-    // const { loading: loadingDeliver, success: successDeliver } = orderDeliver
+
+    // to check the deliever sttaus of the order
+    const orderDeliver = useSelector(state => state.orderDeliver)
+    const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -57,9 +59,10 @@ function OrderScreen({ match, history }) {
             history.push('/login')
         }
 
-        if (!order || successPay || order._id !== Number(orderId)) {
+        if (!order || successPay || order._id !== Number(orderId) || successDeliver) {
             dispatch({ type: ORDER_PAY_RESET })
-            // dispatch({ type: ORDER_DELIVER_RESET })
+            // if the order is delievered then reset the status
+            dispatch({ type: ORDER_DELIVER_RESET })
 
             dispatch(getOrderDetails(orderId))
         } else if (!order.isPaid) {
@@ -69,16 +72,17 @@ function OrderScreen({ match, history }) {
                 setSdkReady(true)
             }
         }
-    }, [dispatch, order, orderId, successPay])
+    }, [dispatch, order, orderId, successPay, successDeliver])
 
 
     const successPaymentHandler = (paymentResult) => {
         dispatch(payOrder(orderId, paymentResult))
     }
 
-    // const deliverHandler = () => {
-    //     dispatch(deliverOrder(order))
-    // }
+    const deliverHandler = () => {
+        // pass in the order and dispatch the deliever Order action
+        dispatch(deliverOrder(order))
+    }
 
     return loading ? (
         <Loader />
@@ -206,7 +210,8 @@ function OrderScreen({ match, history }) {
                                 </ListGroup.Item>
                             )}
                         </ListGroup>
-                        {/* {loadingDeliver && <Loader />}
+                        {loadingDeliver && <Loader />}
+                        {/* useris admin and order is paid and not delivered */}
                         {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                             <ListGroup.Item>
                                 <Button
@@ -215,9 +220,9 @@ function OrderScreen({ match, history }) {
                                     onClick={deliverHandler}
                                 >
                                     Mark As Delivered
-                                        </Button> */}
-                        {/* </ListGroup.Item> */}
-                        {/* )} */}
+                                        </Button>
+                            </ListGroup.Item>
+                        )}
                     </Card>
                 </Col>
             </Row>
