@@ -137,7 +137,14 @@ def deleteUser(request, pk):
 @api_view(['GET'])
 # #the response will only work if you have this decorator before the function
 def getProducts(request):
-    products = Product.objects.all()
+    # if a user search an item, its gonna get the param by keyword so anything keyword= 
+    query = request.query_params.get('keyword')
+
+    if query == None:
+        query = ''
+#  this means if the any part of product name contains the query 
+# i in icontains means no case sensititive
+    products = Product.objects.filter(name__icontains = query)
     serializer = ProductSerializer(products, many=True) #many means more than one objects
     return Response(serializer.data)
 

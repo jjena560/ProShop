@@ -10,14 +10,16 @@ import Product from '../components/Product'
 
 import { listProducts } from '../actions/productActions'
 
-function HomeScreen() {
+function HomeScreen({ history }) {
     const dispatch = useDispatch()
     //  for this read store.js
     //  from homescreen we're triggering listProduct ACTION
     const productList = useSelector(state => state.productList)
-    // console.log(productList)
+
     const { error, loading, products } = productList
 
+    // so now anytime the keyword changes its gonna reload as it is a dependecy now in the useffect
+    let keyword = history.location.search
 
 
     // {
@@ -26,10 +28,10 @@ function HomeScreen() {
     // we need to make an api call and use the setProducts value to update the state of products
     // useEffect is triggered every time a component loads or the state value is updated
     //  }
-
+    console.log(keyword)
     useEffect(() => {
 
-        dispatch(listProducts())
+        dispatch(listProducts(keyword))
 
 
         // {
@@ -44,7 +46,7 @@ function HomeScreen() {
 
 
 
-    }, [dispatch])
+    }, [dispatch, keyword])
 
 
     return (

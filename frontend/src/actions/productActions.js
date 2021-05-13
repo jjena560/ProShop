@@ -34,13 +34,14 @@ import {
 
 // redux thunk allows to make function inside a function
 
-export const listProducts = () => async (dispatch) => {
+// keyword is the searhced key
+export const listProducts = (keyword = '') => async (dispatch) => {
 
     try {
         dispatch({ type: PRODUCT_LIST_REQUEST })
 
         // rather than the homescreen now the action will make the API call
-        const { data } = await axios.get('/api/products/')
+        const { data } = await axios.get(`/api/products${keyword}`)
 
         dispatch({
             type: PRODUCT_LIST_SUCCESS,
