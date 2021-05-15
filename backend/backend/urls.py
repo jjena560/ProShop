@@ -21,10 +21,11 @@ from django.conf import settings
 #this allows us to connect our urls
 
 from django.conf.urls.static import static 
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('/', include('base.urls')),
+    path('', TemplateView.as_view(template_name = 'index.html')),
     path('api/', include('base.urls')),
 ]
 
