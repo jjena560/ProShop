@@ -22,6 +22,7 @@ from django.conf import settings
 
 from django.conf.urls.static import static 
 from django.views.generic import TemplateView
+from django.views.decorators.cache import never_cache
 
 urlpatterns = [
     path('admin/', admin.site.urls),

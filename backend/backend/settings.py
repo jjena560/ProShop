@@ -107,6 +107,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+            # tell django where to find index.html
             os.path.join(BASE_DIR, 'frontend/build')
         ],
         'APP_DIRS': True,
@@ -171,15 +172,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = 'frontned/build/static/'
-MEDIA_URL = 'frontned/build/images/'
+STATIC_URL = '/static/'
+MEDIA_URL = '/images/'
 
-STATICFILES_DIR = [
-    BASE_DIR / 'static',
-    BASE_DIR / 'frontend/build/static'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,  'static'),   
+    os.path.join(BASE_DIR, 'frontend/build/static')
+    #  os.path.join(os.path.join(BASE_DIR, 'frontend'), 'build', 'static'),
+
 ]
 
-MEDIA_ROOT = 'static/images'
+MEDIA_ROOT = BASE_DIR / 'static/images'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

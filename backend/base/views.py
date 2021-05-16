@@ -152,7 +152,7 @@ def getProducts(request):
     # now we want to paginate the filtered data
     page  = request.query_params.get('page') # this will store the page we want to see
 
-    paginator = Paginator(products, 6) # takes in the query set to be paginated and the numer of products to be showed in a single page
+    paginator = Paginator(products, 4) # takes in the query set to be paginated and the numer of products to be showed in a single page
     # now on every page we have two products
 
     
